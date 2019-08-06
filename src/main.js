@@ -3,7 +3,7 @@ import App from './App'
 import router from './router'
 
 // 导入  MUI 的样式
-import '@/assets/mui/css/mui.min.css'
+import '@/assets/mui/css/mui.min.css'  
 
 
 
