@@ -25,3 +25,9 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 1. git add .
 2. git commit -m "提交信息"
 3. git push
+
+
+## 制作首页App组件
+1. 完成 Header 区域，使用的时 Mint-UI 中的Header组件
+2. 制作底部的 Tabber 区域，使用的时MUI 的Tabber.html
+2. 要在 中间区域放置一个 router-view 来展示路由匹配到的组件
