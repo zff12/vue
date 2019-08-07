@@ -4,7 +4,7 @@ import router from './router'
 
 // 导入  MUI 的样式
 import '@/assets/mui/css/mui.min.css'  
-
+import '@/assets/mui/css/icons-extra.css'
 
 
 // 按需导入 Mint-UI 中的组件
