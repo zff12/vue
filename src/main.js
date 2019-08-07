@@ -13,7 +13,7 @@ import {Header} from 'mint-ui'
 Vue.component(Header.name, Header)
 
 Vue.config.productionTip = false
-
+ 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
