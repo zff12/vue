@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <block></block>
+    
   </div>
 </template>
 
