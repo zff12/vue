@@ -10,19 +10,19 @@
     <!-- 九宫格 到 六宫格 的改造过程 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/newlist">
           <img src="@/assets/sex/menu1.png" alt="">
           <div class="mui-media-body">新闻资讯</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/photolist">
             <img src="@/assets/sex/menu2.png" alt="">
           <div class="mui-media-body">图片分享</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <a href="javascript:;">
           <img src="@/assets/sex/menu3.png" alt="">
           <div class="mui-media-body">商品购买</div>
         </a>
@@ -67,8 +67,10 @@ export default {
       axios
         .get("http://www.liulongbin.top:3005/api/getlunbo")
         .then(res => {
-          this.arr = res.data.message;
-          console.log(res);
+          if(res.data.status === 0){
+            this.arr = res.data.message;
+            // console.log(res);
+          }
         })
         .catch(res => {
           console.log(res);
@@ -99,6 +101,7 @@ export default {
     }
 }
 .mui-grid-view.mui-grid-9 .mui-table-view-cell{
-    border: none;
+  width: 33.33%;
+  border: none;
 }
 </style>
