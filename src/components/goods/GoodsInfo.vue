@@ -29,11 +29,16 @@
                         <span class="now_price">￥{{ goodsinfo.sell_price }}</span>
                     </p>
                     <p>购买数量：
-                        <numbox></numbox>
+                        <numbox @getcount="getSelectedCount" :max="goodsinfo.stock_quantity"></numbox>
                     </p>
                     <p>
                         <mt-button type="primary" size="small">立即购买</mt-button>
                         <mt-button type="danger" size="small" @click="addToShopCar">加入购物车</mt-button>
+                        <!-- 分析：如何实现加入购物车时候，拿到 选择的数量 -->
+                        <!-- 1. 经过分析发现：按钮属于 goodsinfo 页面，数字 属于 numberbox 组件 -->
+                        <!-- 2. 由于涉及了父子组件的嵌套了，所以，无法直接在 goodsinfo 页面中获取到 选中的商品数量值 -->
+                        <!-- 3. 怎么解决这个问题：涉及到了子组件向父组件传值了（事件调用机制） -->
+                        <!-- 4. 事件调用的本质：父向子传递方法，子调用这个方法，同时把 数据当作参数 传递给这个方法 -->
                     </p>
                 </div>
             </div>
@@ -78,7 +83,8 @@ export default {
             id: this.$route.params.id, //将路由参数对象中的 id 挂载到 data ，
             lunbotu: [], //轮播图的数据
             goodsinfo: {}, //获取到的商品的信息
-            ballFlag: false //控制小球的隐藏和显示的标识符
+            ballFlag: false, //控制小球的隐藏和显示的标识符
+            selectedCount: 1 //保存用户选中的商品数量，默认，认为用户买一个
         }
     },
     created(){
@@ -118,6 +124,16 @@ export default {
         addToShopCar() {
             // 添加到购物车
             this.ballFlag = !this.ballFlag;
+            // { id:商品的id, count:要购买的数量, price: 商品的单价, selected:false }
+            // 拼接出一个，要保存到 store 中 car 数组里的 商品信息对象
+            var goodsinfo = {
+                 id: this.id, 
+                 count: this.selectedCount, 
+                 price: this.goodsinfo.sell_price, 
+                 selected: true 
+                };
+                // 调用 store 中的 mutations 来将商品加入购物车
+                this.$store.commit('addToCar',goodsinfo)
         },
         beforeEnter(el) {
             el.style.transform = "translate(0,0)";
@@ -144,12 +160,18 @@ export default {
             const yDist = badgePosition.top - ballPosition.top;
 
             el.style.transform = `translate(${xDist}px,${yDist}px)`;
-            el.style.transition = "all 1s cubic-bezier(.4,-0.3,1,.68)";
+            el.style.transition = "all 0.5s cubic-bezier(.4,-0.3,1,.68)";
             done();
         },
         afterEnter(el) {
             this.ballFlag = !this.ballFlag;
+        },
+        getSelectedCount(count) {
+            // 当子组件把 选中的数量传递给父组件的时候，把选中的值保存到 data 上
+            this.selectedCount = count;
+            console.log('父组件拿到的值为：'+this.selectedCount)
         }
+
     },
     components: {
         swiper,
