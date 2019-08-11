@@ -1,11 +1,7 @@
 <template>
   <div>
     <!-- 轮播图区 -->
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="item in arr" :key="item.img">
-        <img :src="item.img" alt />
-      </mt-swipe-item>
-    </mt-swipe>
+    <swiper :lunbotuList="arr" :isfull="true"></swiper>
 
     <!-- 九宫格 到 六宫格 的改造过程 -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -22,10 +18,10 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="javascript:;">
+        <router-link to="/home/goodslist">
           <img src="@/assets/sex/menu3.png" alt="">
           <div class="mui-media-body">商品购买</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
@@ -52,6 +48,9 @@
 </template>
 <script>
 import axios from "axios";
+import { Toast } from "mint-ui"
+import swiper from '@/components/subcomponents/swiper.vue'
+
 export default {
   name: "home",
   data() {
@@ -70,25 +69,22 @@ export default {
           if(res.data.status === 0){
             this.arr = res.data.message;
             // console.log(res);
+          } else {
+            Toast("加载轮播图失败。。。")
           }
         })
         .catch(res => {
           console.log(res);
         });
     }
+  },
+  components: {
+    swiper
   }
 };
 </script>
 <style lang="less" scoped>
-.mint-swipe {
-  height: 200px;
-  .mint-swipe-item {
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
+
 .mui-grid-view.mui-grid-9{
     background-color: #fff;
     border: none;
